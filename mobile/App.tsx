@@ -1,4 +1,3 @@
-import { useRef, useEffect } from "react";
 import { StatusBar } from "react-native";
 import {
   useFonts,
@@ -11,8 +10,6 @@ import {
 import { Routes } from "./src/routes";
 import { Background } from "./src/components/Background";
 import { Loading } from "./src/components/Loading";
-
-import "./src/services/notificationConfigs";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
