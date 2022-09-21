@@ -49,7 +49,7 @@ function App() {
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     initial: 0,
     slides: {
-      perView: 'auto',
+      perView: 6,
       spacing: 30
     },
     slideChanged(slider) {
@@ -75,7 +75,7 @@ function App() {
         está aqui
       </h1>
 
-      <div className="flex justify-center items-center mt-16">
+      <div className="flex justify-center items-center mt-16 max-w-[95%]">
         <button 
           onClick={() => instanceRef.current?.prev()}
           className="text-6xl text-white mr-4 rounded-full hover:bg-violet-600"
