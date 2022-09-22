@@ -42,20 +42,68 @@ const MutationPlugin: KeenSliderPlugin = (slider) => {
   })
 }
 
+const ResizePlugin: KeenSliderPlugin = (slider) => {
+  const observer = new ResizeObserver(function () {
+    slider.update()
+  })
+
+  slider.on("created", () => {
+    observer.observe(slider.container)
+  })
+  slider.on("destroyed", () => {
+    observer.unobserve(slider.container)
+  })
+}
+
 
 function App() {
   const [games, setGames] = useState<Game[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0)
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
+    updated(){
+      useEffect
+    },
     initial: 0,
     slides: {
       perView: 6,
       spacing: 30
     },
+    breakpoints: {
+      '(max-width: 1280px)': {
+        slides: {
+          perView: 5,
+          spacing: 30
+        },
+      },
+      '(max-width: 1024px)': {
+        slides: {
+          perView: 4,
+          spacing: 30
+        },
+      },
+      '(max-width: 800px)': {
+        slides: {
+          perView: 3,
+          spacing: 30
+        },
+      },
+      '(max-width: 500px)': {
+        slides: {
+          perView: 2,
+          spacing: 30
+        },
+      },
+      '(max-width: 428px)': {
+        slides: {
+          perView: 1,
+          spacing: 30
+        },
+      },
+    },
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel)
-    }
-  }, [MutationPlugin]);
+    },
+  }, [MutationPlugin, ResizePlugin]);
 
   useEffect(() => {
     axios("http://localhost:3333/games").then((response) => {
@@ -65,9 +113,9 @@ function App() {
 
   return (
     <div className="max-w-[1244px] mx-auto flex flex-col items-center m-20">
-      <img src={logoImg} alt="" />
+      <img src={logoImg} alt="Logo Nlw E-sports" />
 
-      <h1 className="text-6xl text-white font-black mt-20">
+      <h1 className="text-3xl md:text-4xl lg:text-6xl text-white font-black mt-10 lg:mt-20">
         Seu{" "}
         <span className="text-transparent bg-nlw-duo-gradient bg-clip-text">
           duo
@@ -75,7 +123,7 @@ function App() {
         está aqui
       </h1>
 
-      <div className="flex justify-center items-center mt-16 max-w-[95%]">
+      <div className="flex justify-center items-center  mt-10 lg:mt-16 max-w-[95%]">
         <button 
           onClick={() => instanceRef.current?.prev()}
           className="text-6xl text-white mr-4 rounded-full hover:bg-violet-600"
