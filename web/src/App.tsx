@@ -18,6 +18,7 @@ import { CaretLeft, CaretRight } from "phosphor-react";
 import logoImg from "./assets/logo-nlw-esports.svg";
 
 import "./styles/main.css";
+import ViewGameAd from "./components/ViewGameAd";
 
 interface Game {
   id: string;
@@ -67,16 +68,10 @@ function App() {
       },
       initial: 0,
       slides: {
-        perView: 6,
+        perView: 5,
         spacing: 30,
       },
       breakpoints: {
-        "(max-width: 1280px)": {
-          slides: {
-            perView: 5,
-            spacing: 30,
-          },
-        },
         "(max-width: 1024px)": {
           slides: {
             perView: 4,
@@ -156,8 +151,8 @@ function App() {
 
       <Dialog.Root>
         <CreateAdBanner />
-
         <CreateAdModal />
+        <ViewGameAd />
       </Dialog.Root>
 
       <ToastContainer
