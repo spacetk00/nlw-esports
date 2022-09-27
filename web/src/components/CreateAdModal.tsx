@@ -1,6 +1,7 @@
 import { useEffect, useState, FormEvent } from "react";
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Checkbox from "@radix-ui/react-checkbox";
@@ -31,9 +32,24 @@ export function CreateAdModal() {
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
 
-		if (!data.name) {
-			return
-		}
+    if (!data.game) {
+      return toast.error("Selecione um Game")
+    }
+
+    if (!data.name) {
+      return toast.error("Informe seu Nome");
+    }
+
+    if (!data.discord) {
+      return toast.error("Informe seu Discord");
+    }
+    if (weekDays.length === 0) {
+      return toast.error("Selecione pelo menos um dia");
+    }
+
+    if (data.hourStart === "" || data.hourEnd === "") {
+      return toast.error("Informe um horário disponível");
+    }
 
     try {
       await axios.post(`http://localhost:3333/games/${data.game}/ads`, {
@@ -43,13 +59,13 @@ export function CreateAdModal() {
         weekDays: weekDays.map(Number),
         hourStart: data.hourStart,
         hourEnd: data.hourEnd,
-        useVoiceChannel: data.useVoiceChannel,
+        useVoiceChannel: useVoiceChannel,
       });
 
-      alert("Anúncio criado com sucesso!");
+      toast.success("Anúncio criado com sucesso");
     } catch (err) {
-			console.log(err)
-      alert("Erro ao criar o anúncio!");
+      console.log(err);
+      toast.error("Erro ao criar anúncio. Tente novamente mais tarde");
     }
   }
 

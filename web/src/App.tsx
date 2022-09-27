@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 
-import 'keen-slider/keen-slider.min.css'
-import { useKeenSlider, KeenSliderPlugin } from 'keen-slider/react'
+import "keen-slider/keen-slider.min.css";
+import "react-toastify/dist/ReactToastify.min.css";
+import { useKeenSlider, KeenSliderPlugin } from "keen-slider/react";
+import { ToastContainer } from "react-toastify";
 
 import * as Dialog from "@radix-ui/react-dialog";
 
@@ -29,81 +31,83 @@ interface Game {
 const MutationPlugin: KeenSliderPlugin = (slider) => {
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
-      slider.update()
-    })
-  })
-  const config = { childList: true }
+      slider.update();
+    });
+  });
+  const config = { childList: true };
 
   slider.on("created", () => {
-    observer.observe(slider.container, config)
-  })
+    observer.observe(slider.container, config);
+  });
   slider.on("destroyed", () => {
-    observer.disconnect()
-  })
-}
+    observer.disconnect();
+  });
+};
 
 const ResizePlugin: KeenSliderPlugin = (slider) => {
   const observer = new ResizeObserver(function () {
-    slider.update()
-  })
+    slider.update();
+  });
 
   slider.on("created", () => {
-    observer.observe(slider.container)
-  })
+    observer.observe(slider.container);
+  });
   slider.on("destroyed", () => {
-    observer.unobserve(slider.container)
-  })
-}
-
+    observer.unobserve(slider.container);
+  });
+};
 
 function App() {
   const [games, setGames] = useState<Game[]>([]);
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
-    updated(){
-      useEffect
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
+    {
+      updated() {
+        useEffect;
+      },
+      initial: 0,
+      slides: {
+        perView: 6,
+        spacing: 30,
+      },
+      breakpoints: {
+        "(max-width: 1280px)": {
+          slides: {
+            perView: 5,
+            spacing: 30,
+          },
+        },
+        "(max-width: 1024px)": {
+          slides: {
+            perView: 4,
+            spacing: 30,
+          },
+        },
+        "(max-width: 800px)": {
+          slides: {
+            perView: 3,
+            spacing: 30,
+          },
+        },
+        "(max-width: 500px)": {
+          slides: {
+            perView: 2,
+            spacing: 30,
+          },
+        },
+        "(max-width: 428px)": {
+          slides: {
+            perView: 1,
+            spacing: 30,
+          },
+        },
+      },
+      slideChanged(slider) {
+        setCurrentSlide(slider.track.details.rel);
+      },
     },
-    initial: 0,
-    slides: {
-      perView: 6,
-      spacing: 30
-    },
-    breakpoints: {
-      '(max-width: 1280px)': {
-        slides: {
-          perView: 5,
-          spacing: 30
-        },
-      },
-      '(max-width: 1024px)': {
-        slides: {
-          perView: 4,
-          spacing: 30
-        },
-      },
-      '(max-width: 800px)': {
-        slides: {
-          perView: 3,
-          spacing: 30
-        },
-      },
-      '(max-width: 500px)': {
-        slides: {
-          perView: 2,
-          spacing: 30
-        },
-      },
-      '(max-width: 428px)': {
-        slides: {
-          perView: 1,
-          spacing: 30
-        },
-      },
-    },
-    slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel)
-    },
-  }, [MutationPlugin, ResizePlugin]);
+    [MutationPlugin, ResizePlugin]
+  );
 
   useEffect(() => {
     axios("http://localhost:3333/games").then((response) => {
@@ -124,11 +128,11 @@ function App() {
       </h1>
 
       <div className="flex justify-center items-center  mt-10 lg:mt-16 max-w-[95%]">
-        <button 
+        <button
           onClick={() => instanceRef.current?.prev()}
           className="text-6xl text-white mr-4 rounded-full hover:bg-violet-600"
         >
-          <CaretLeft size={50} color='white' />
+          <CaretLeft size={50} color="white" />
         </button>
         <div ref={sliderRef} className="keen-slider">
           {games.map((game) => {
@@ -142,7 +146,7 @@ function App() {
             );
           })}
         </div>
-        <button 
+        <button
           onClick={() => instanceRef.current?.next()}
           className="text-6xl text-white ml-4 rounded-full hover:bg-violet-600"
         >
@@ -155,6 +159,12 @@ function App() {
 
         <CreateAdModal />
       </Dialog.Root>
+
+      <ToastContainer
+        theme={"dark"}
+        position="bottom-center"
+        autoClose={3000}
+      />
     </div>
   );
 }
