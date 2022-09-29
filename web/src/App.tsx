@@ -18,7 +18,6 @@ import { CaretLeft, CaretRight } from "phosphor-react";
 import logoImg from "./assets/logo-nlw-esports.svg";
 
 import "./styles/main.css";
-import ViewGameAd from "./components/ViewGameAd";
 
 interface Game {
   id: string;
@@ -134,6 +133,7 @@ function App() {
             return (
               <GameBanner
                 key={game.id}
+                gameId={game.id}
                 bannerUrl={game.bannerUrl}
                 title={game.title}
                 adsCount={game._count.ads}
@@ -152,7 +152,6 @@ function App() {
       <Dialog.Root>
         <CreateAdBanner />
         <CreateAdModal />
-        <ViewGameAd />
       </Dialog.Root>
 
       <ToastContainer
