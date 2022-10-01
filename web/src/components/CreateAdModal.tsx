@@ -50,6 +50,7 @@ export function CreateAdModal() {
     if (data.hourStart === "" || data.hourEnd === "") {
       return toast.error("Informe um horário disponível");
     }
+    
 
     try {
       await axios.post(`http://localhost:3333/games/${data.game}/ads`, {

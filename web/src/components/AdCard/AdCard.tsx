@@ -1,6 +1,8 @@
 import { Ad } from "../ViewGameAds";
 import { DayBadge } from "./DayBadge"; 
 
+import { DiscordLogo } from "phosphor-react";
+
 
 export function AdCard(props: Ad) {
   function convertWeekDays(weekDays: Array<string>) {
@@ -25,14 +27,14 @@ export function AdCard(props: Ad) {
     return wa;
   }
   return (
-    <div className="bg-zinc-900 w-96 p-5 mb-4 rounded">
+    <div className="bg-zinc-900 w-72 sm:w-96 p-5 mb-4 rounded">
       <div className="py-1">
         <p className="text-slate-400">Nome</p>
         <p className="font-bold">{props.name}</p>
       </div>
       <div className="py-1">
         <p className="text-slate-400">Discord</p>
-        <p className="font-bold">{props.discord}</p>
+        <p className="flex items-center font-bold"><DiscordLogo size={22}/><span className="ml-2">{props.discord}</span></p>
       </div>
       <div className="py-1">
         <p className="text-slate-400">Disponibilidade</p>
