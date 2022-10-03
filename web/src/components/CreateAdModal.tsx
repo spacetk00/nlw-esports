@@ -1,7 +1,10 @@
 import { useEffect, useState, FormEvent } from "react";
 
 import axios from "axios";
+
+import "react-toastify/dist/ReactToastify.min.css";
 import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Checkbox from "@radix-ui/react-checkbox";
@@ -64,6 +67,9 @@ export function CreateAdModal() {
       });
 
       toast.success("Anúncio criado com sucesso");
+      setTimeout(() => {
+       window.location.reload(); 
+      }, 2000);
     } catch (err) {
       console.log(err);
       toast.error("Erro ao criar anúncio. Tente novamente mais tarde");
@@ -75,6 +81,12 @@ export function CreateAdModal() {
       <Dialog.Overlay className="bg-black/80 inset-0 fixed" />
 
       <Dialog.Content className="fixed bg-[#2A2634] py-8 px-4 md:px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[320px] sm:w-[480px] shadow-lg shadow-black/25">
+        <ToastContainer
+          limit={3}
+          theme={"dark"}
+          position="bottom-center"
+          autoClose={2000}
+        />
         <Dialog.Title className="text-xl text-center sm:text-left sm:text-3xl font-black">
           Publique um anúncio
         </Dialog.Title>

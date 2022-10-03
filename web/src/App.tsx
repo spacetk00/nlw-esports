@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import "keen-slider/keen-slider.min.css";
-import "react-toastify/dist/ReactToastify.min.css";
 import { useKeenSlider, KeenSliderPlugin } from "keen-slider/react";
-import { ToastContainer } from "react-toastify";
 
 import * as Dialog from "@radix-ui/react-dialog";
 
@@ -153,12 +151,6 @@ function App() {
         <CreateAdBanner />
         <CreateAdModal />
       </Dialog.Root>
-
-      <ToastContainer
-        theme={"dark"}
-        position="bottom-center"
-        autoClose={3000}
-      />
     </div>
   );
 }
